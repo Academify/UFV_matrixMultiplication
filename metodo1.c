@@ -111,12 +111,13 @@ void liberaMemoria(long int** matriz, long int* linhas){
 
 
 // PROTOTIPOS
-void leMatriz(int** matriz, int numLinhas);
-void imprimeMatriz(int** matriz, int numLinhas);
-void multiplicarMatrizes(int** matriz_1, int** matriz_2, int** matriz_3, int numLinhas);
-void liberaMemoria(int** matriz, int linhas);
-void autoAlocMAtriz(int** alocarMatriz, int numlinhas);
+void leMatriz(long int** matriz, int numLinhas);
+void imprimeMatriz(long int** matriz, int numLinhas);
+void multiplicarMatrizes(long int** matriz_1, long int** matriz_2, long int** matriz_3, int numLinhas);
+void liberaMemoria(long int** matriz, int linhas);
+void autoAlocMAtriz(long int** alocarMatriz, int numlinhas);
 
+// Tá dando merda no commit
 
 int main(int argc, char *argv[]){
 
@@ -131,13 +132,13 @@ int main(int argc, char *argv[]){
 	printf("\n");
 
 	// Alocação das matrizes a seram usadas
-    int **matriz1 = (int**)malloc(n * sizeof(int*)); 
+    long int **matriz1 = (long int**)malloc(n * sizeof(long int*)); 
 	autoAlocMAtriz(matriz1, n);
 
-    int **matriz2 = (int**)malloc(n * sizeof(int*));
+    long int **matriz2 = (long int**)malloc(n * sizeof(long int*));
 	autoAlocMAtriz(matriz2, n);
 
-    int **matriz3 = (int**) malloc(n * sizeof(int*));
+    long int **matriz3 = (long int**) malloc(n * sizeof(long int*));
 	autoAlocMAtriz(matriz3, n);
 
 
@@ -169,7 +170,7 @@ int main(int argc, char *argv[]){
 }
 
 
-void leMatriz(int** matriz, int numLinhas){
+void leMatriz(long int** matriz, int numLinhas){
 	for (int i = 0; i < numLinhas; i++){
     	for(int j = 0; j < numLinhas; j++){
       		scanf("%d", &matriz[i][j]);
@@ -177,7 +178,7 @@ void leMatriz(int** matriz, int numLinhas){
   	}
 }
 
-void imprimeMatriz(int** matriz, int numLinhas){
+void imprimeMatriz(long int** matriz, int numLinhas){
   	for (int i = 0; i < numLinhas; i++){
 		for(int j = 0; j < numLinhas; j++){
     		printf("%d ", matriz[i][j]);
@@ -187,7 +188,7 @@ void imprimeMatriz(int** matriz, int numLinhas){
   	printf("\n");
 }
 
-void multiplicarMatrizes(int** matriz_1, int** matriz_2, int** matriz_3, int numLinhas){
+void multiplicarMatrizes(long int** matriz_1, long int** matriz_2, long int** matriz_3, int numLinhas){
 	
 	int multiplicador = 0;
 	for (int i = 0; i < numLinhas; i++){
@@ -202,17 +203,17 @@ void multiplicarMatrizes(int** matriz_1, int** matriz_2, int** matriz_3, int num
 	}
 }
 
-void liberaMemoria(int** matriz, int linhas){
+void liberaMemoria(long int** matriz, int linhas){
   for (int i = 0; i < linhas; i++){
     free(matriz[i]);
   }
   free(matriz);
 }
 
-void autoAlocMAtriz(int** alocarMatriz, int numlinhas){
+void autoAlocMAtriz(long int** alocarMatriz, int numlinhas){
 
 	for (int i = 0; i < numlinhas; i++){
-		alocarMatriz[i] = (int*) malloc(numlinhas * sizeof(int)); 
+		alocarMatriz[i] = (long int*) malloc(numlinhas * sizeof(long int)); 
     	for (int j = 0; j < numlinhas; j++){
     		// Inicializa os vetores com 0;
 			alocarMatriz[i][j] = 0;
