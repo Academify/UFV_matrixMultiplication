@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
     
 int main(){
   int n;
@@ -14,29 +15,29 @@ int main(){
   printf("\n");
 
 
-    int **matriz1 = (int**)malloc(n * sizeof(int*)); // Alocou um vetor de ponteiros onde em cada índice será alocado um vetor
+    long int **matriz1 = (long int**)malloc(n * sizeof(long int*)); // Alocou um vetor de ponteiros onde em cada índice será alocado um vetor
 
     for (int i = 0; i < n; i++){
-      matriz1[i] = (int*) malloc(n * sizeof(int)); // Alocou os vetores de inteiro
+      matriz1[i] = (long int*) malloc(n * sizeof(long int)); // Alocou os vetores de inteiro
       for (int j = 0; j < n; j++){
         matriz1[i][j] = 0; // Inicializa os vetores com 0;
       }
     }
 
-    int **matriz2 = (int**)malloc(n * sizeof(int*));
+    long int **matriz2 = (long int**)malloc(n * sizeof(long int*));
 
     for (int i = 0; i < n; i++){
-      matriz2[i] = (int*) malloc(n * sizeof(int));
+      matriz2[i] = (long int*) malloc(n * sizeof(long int));
       for (int j = 0; j < n; j++){
         matriz2[i][j] = 0;
       }
       
     }
 
-    int **matriz3 = (int**) malloc(n * sizeof(int*));
+    long int **matriz3 = (long int**) malloc(n * sizeof(long int*));
 
     for (int i = 0; i < n; i++){
-      matriz3[i] = (int*) malloc(n * sizeof(int));
+      matriz3[i] = (long int*) malloc(n * sizeof(long int));
       for (int j = 0; j < n; j++){
         matriz3[i][j] = 0;
       }
@@ -49,7 +50,7 @@ int main(){
     imprimeMatriz(matriz2, n); // Retirar isso
 
     
-    multiplicarMatrizes(matriz1, matriz2, matriz3);
+    multiplicarMatrizes(matriz1, matriz2, matriz3, n);
 
     imprimeMatriz(matriz3, n); // Imprime a matriz resultante
 
@@ -72,7 +73,7 @@ int main(){
   }
 } */
 
-void leMatriz(int** matriz, int n){
+void leMatriz(long int** matriz, long int n){
   for (int i = 0; i < n; i++){
     for(int j=0; j < n; j++){
       scanf("%d", &matriz[i][j]);
@@ -81,7 +82,7 @@ void leMatriz(int** matriz, int n){
   printf("\n");
 }
 
-void imprimeMatriz(int** matriz, int n){
+void imprimeMatriz(long int** matriz, long int n){
   for (int i = 0; i < n; i++){
     for(int j=0; j < n; j++){
       printf("%d", matriz[i][j]);
@@ -91,12 +92,12 @@ void imprimeMatriz(int** matriz, int n){
   printf("\n");
 }
 
-void multiplicarMatrizes(int** matriz1, int** matriz2, int** matriz3){
+void multiplicarMatrizes(long int** matriz1, long int** matriz2, long int** matriz3, int n){
   //Fazer a função de multiplicar aqui
   printf("Chegou até aqui\n");
 }
 
-void liberaMemoria(int** matriz, int* linhas){
+void liberaMemoria(long int** matriz, long int* linhas){
   for (int i = 0; i < linhas; i++){
     free(matriz[i]);
   }
