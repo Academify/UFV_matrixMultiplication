@@ -9,6 +9,7 @@ void multiplicarMatrizes(long int** matriz_1, long int** matriz_2, long int** ma
 void liberaMemoria(long int** matriz, int linhas);
 void autoAlocMAtriz(long int** alocarMatriz, int numlinhas);
 
+// Tá dando merda no commit
 
 int main(int argc, char *argv[]){
 
