@@ -7,7 +7,7 @@ void leMatriz(long int** matriz, int numLinhas);
 void imprimeMatriz(long int** matriz, int numLinhas);
 void multiplicarMatrizes(long int** matriz_1, long int** matriz_2, long int** matriz_3, int numLinhas);
 void liberaMemoria(long int** matriz, int linhas);
-void autoAlocMAtriz(long int** alocarMatriz, int numlinhas);
+void autoAlocMatriz(long int** alocarMatriz, int numlinhas);
 
 
 
@@ -21,17 +21,17 @@ int main(int argc, char *argv[]){
 
 
 	scanf("%d", &n); // Lê a ordem das matrizes
-	printf("\n");
+	
 
 	// Alocação das matrizes a seram usadas
     long int **matriz1 = (long int**)malloc(n * sizeof(long int*)); 
-	autoAlocMAtriz(matriz1, n);
+	autoAlocMatriz(matriz1, n);
 
     long int **matriz2 = (long int**)malloc(n * sizeof(long int*));
-	autoAlocMAtriz(matriz2, n);
+	autoAlocMatriz(matriz2, n);
 
     long int **matriz3 = (long int**) malloc(n * sizeof(long int*));
-	autoAlocMAtriz(matriz3, n);
+	autoAlocMatriz(matriz3, n);
 
 
 	// Le as matrizes 1 e 2
@@ -102,7 +102,7 @@ void liberaMemoria(long int** matriz, int linhas){
   free(matriz);
 }
 
-void autoAlocMAtriz(long int** alocarMatriz, int numlinhas){
+void autoAlocMatriz(long int** alocarMatriz, int numlinhas){
 	for (int i = 0; i < numlinhas; i++){
 		alocarMatriz[i] = (long int*) malloc(numlinhas * sizeof(long int)); 
     for (int j = 0; j < numlinhas; j++){
