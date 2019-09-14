@@ -42,8 +42,6 @@ void divideMatriz(long int** mat, int n){
 
     long int **matA1 = (long int**) malloc(metade * sizeof(long int*));
     autoAlocMatriz(matA1, metade);
-    matA1[1][1] = mat[1][1];
-    imprimeMatriz(matA1, metade);
     /* for (int i = 0; i < metade; i++){
         for (int j = 0; j < metade; j++){
             matA1[i][j] = mat[i][j];
