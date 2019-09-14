@@ -106,9 +106,9 @@ void liberaMemoria(long int** matriz, int linhas){
 void autoAlocMAtriz(long int** alocarMatriz, int numlinhas){
 	for (int i = 0; i < numlinhas; i++){
 		alocarMatriz[i] = (long int*) malloc(numlinhas * sizeof(long int)); 
-    for (int j = 0; j < numlinhas; j++){
-    	// Inicializa os vetores com 0;
+		for (int j = 0; j < numlinhas; j++){
+			// Inicializa os vetores com 0;
 			alocarMatriz[i][j] = 0;
-    }
-  }
+		}
+	}
 }

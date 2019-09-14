@@ -8,6 +8,8 @@ void multiplicarMatrizes(long int** matriz1, long int** matriz2, long int** matr
 void liberaMemoria(long int** matriz, int linhas);
 void autoAlocMatriz(long int** alocarMatriz, int numlinhas);
 
+void somaMatrizes(long int **matrizA, long int **matrizB, long int **matrizR, int n, char tipo);
+
 
 void geradoraDeMatrizes(int n);
 
