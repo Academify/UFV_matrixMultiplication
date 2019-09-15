@@ -65,7 +65,7 @@ int main(int argc, char *argv[]){
 void leMatriz(long int** matriz, int numLinhas){
 	for (int i = 0; i < numLinhas; i++){
     	for(int j = 0; j < numLinhas; j++){
-      		scanf("%d", &matriz[i][j]);
+      		scanf("%ld", &matriz[i][j]);
     	}
   	}
 }
@@ -73,7 +73,7 @@ void leMatriz(long int** matriz, int numLinhas){
 void imprimeMatriz(long int** matriz, int numLinhas){
   	for (int i = 0; i < numLinhas; i++){
 		for(int j = 0; j < numLinhas; j++){
-    		printf("%d ", matriz[i][j]);
+    		printf("%ld ", matriz[i][j]);
     	}
     	printf("\n");
   	}
@@ -103,7 +103,7 @@ void liberaMemoria(long int** matriz, int linhas){
 }
 
 
-void autoAlocMAtriz(long int** alocarMatriz, int numlinhas){
+void autoAlocMatriz(long int** alocarMatriz, int numlinhas){
 	for (int i = 0; i < numlinhas; i++){
 		alocarMatriz[i] = (long int*) malloc(numlinhas * sizeof(long int)); 
 		for (int j = 0; j < numlinhas; j++){
