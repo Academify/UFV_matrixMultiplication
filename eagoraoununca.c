@@ -13,9 +13,10 @@
     void leMatriz(long int** matriz, int numLinhas);
     void imprimeMatriz(long int** mat, int numLinhas);
     void autoAlocMatriz(long int** alocarMatriz, int numlinhas);
+    void juntarMatriz(long int** matrizC, long int** matrizC1, long int** matrizC2, long int** matrizC3, long int** matrizC4, int n);
     void divideMatrizA(long int** mat, long int** matA1, long int** matA2, long int** matA3, long int** matA4, int n);
     void divideMatrizB(long int** mat, long int** matB1, long int** matB2, long int** matB3, long int** matB4, int n);
-    void valgrindZero(long int** matrizA, long int** matrizB, int n);
+    void valgrindZero(long int** matrizA, long int** matrizB, long int** matrizC, int n);
 
     void somaMatrizes(long int **matrizX, long int **matrizY, long int **matrizW, int n, char tipo);
     void multiplicarMatrizes(long int** matrizX, long int** matrizY, long int** matrizW, int n);
@@ -49,6 +50,8 @@ int main(){
         autoAlocMatriz(matrizA, n);
         long int **matrizB = (long int**) malloc(n * sizeof(long int*));
         autoAlocMatriz(matrizB, n);
+        long int **matrizC = (long int**) malloc(n * sizeof(long int*));
+        autoAlocMatriz(matrizC, n);
 
         // MATRIZES M
         long int **matrizM1 = (long int**) malloc(metade * sizeof(long int*));
@@ -128,7 +131,14 @@ int main(){
         calculaMatrizC3(matrizC3, matrizM2, matrizM4, metade);
         calculaMatrizC4(matrizC4, matrizM1, matrizM2, matrizM3, matrizM6, metade);
 
-        valgrindZero(matrizA, matrizB, n);
+        imprimeMatriz(matrizC1, metade);
+        imprimeMatriz(matrizC2, metade);
+        imprimeMatriz(matrizC3, metade);
+        imprimeMatriz(matrizC4, metade);
+
+        juntarMatriz(matrizC, matrizC1, matrizC2, matrizC3, matrizC4, n);
+
+        valgrindZero(matrizA, matrizB, matrizC, n);
 
         liberaMemoria(matA1, metade);
         liberaMemoria(matA2, metade);
@@ -170,6 +180,23 @@ void autoAlocMatriz(long int** alocarMatriz, int numlinhas){
             alocarMatriz[i][j] = 0;
         }
     }
+}
+
+void juntarMatriz(long int** matrizC, long int** matrizC1, long int** matrizC2, long int** matrizC3, long int** matrizC4, int n){
+    int metade = n/2;
+
+    for (int i = 0; i < metade; i++){
+        for (int j = 0; j < metade; j++){
+            matrizC[i][j] = matrizC1[i][j];
+            matrizC[i][j+metade] = matrizC2[i][j];
+            matrizC[i+metade][j] = matrizC3[i][j];
+            matrizC[i+metade][j+metade] = matrizC4[i][j];
+
+        }
+    }
+
+    imprimeMatriz(matrizC, n);
+
 }
 
 void divideMatrizA(long int** mat, long int** matA1, long int** matA2, long int** matA3, long int** matA4, int n){
@@ -280,9 +307,10 @@ void liberaMemoria(long int** matriz, int linhas){
 }
 
 
-void valgrindZero(long int** matrizA, long int** matrizB, int n){
+void valgrindZero(long int** matrizA, long int** matrizB, long int** matrizC, int n){
     liberaMemoria(matrizA, n);
     liberaMemoria(matrizB, n);
+    liberaMemoria(matrizC, n);
 
 }
 
@@ -458,8 +486,10 @@ void calculaMatrizC1(long int **matrizC1, long int **matrizM1, long int **matriz
 	autoAlocMatriz(matrizR2, n);
 
 	somaMatrizes(matrizM1, matrizM4, matrizR1, n, '0');
-	somaMatrizes(matrizM5, matrizM7, matrizR2, n, '0');
-	somaMatrizes(matrizR1, matrizR2, matrizC1, n, '1');
+    //imprimeMatriz(matrizR1, n);
+	somaMatrizes(matrizR1, matrizM5, matrizR2, n, '1');
+    //imprimeMatriz(matrizR2, n);
+	somaMatrizes(matrizR2, matrizM7, matrizC1, n, '0');
 
 	liberaMemoria(matrizR1, n);
 	liberaMemoria(matrizR2, n);
