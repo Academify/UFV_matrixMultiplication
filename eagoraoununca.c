@@ -39,7 +39,7 @@
     void calcular(long int ** matrizA, long int ** matrizB, long int ** matrizC, int n);
 
 
-int DEBUG_MODE = 100;
+int DEBUG_MODE = 0;
 
 int main(){
     
@@ -249,7 +249,7 @@ void somaMatrizes(long int **matrizX, long int **matrizY, long int **matrizW, in
 			}
 		}
 	}
-	else{
+	if (tipo == '1'){
 		for (int i = 0; i < n; i++){
 			for (int j = 0; j < n; j++){
 				matrizW[i][j] = matrizX[i][j] - matrizY[i][j];
@@ -283,8 +283,6 @@ void calculoMatrizM1(long int **matrizR1, long int **matrizR2, long int **matriz
     somaMatrizes(matrizA1, matrizA4, matrizR1, n/2, '0');
     somaMatrizes(matrizB1, matrizB4, matrizR2, n/2, '0');
     calcular(matrizR1, matrizR2, matrizM1, n/2);
-
-
 }
 
 void calculoMatrizM2(long int **matrizR1, long int **matrizM2, long int **matrizA3, long int **matrizA4, long int **matrizB1, int n){
@@ -295,7 +293,6 @@ void calculoMatrizM2(long int **matrizR1, long int **matrizM2, long int **matriz
 
 	somaMatrizes(matrizA3, matrizA4, matrizR1, n/2, '0');
 	multiplicarMatrizes(matrizR1, matrizB1, matrizM2, n/2);
-
 }
 
 void calculoMatrizM3(long int **matrizR1, long int **matrizM3, long int **matrizA1, long int **matrizB2, long int **matrizB4, int n){
@@ -413,7 +410,7 @@ void calcularMatrizC(long int **matrizR1, long int **matrizR2, long int **matriz
 
 void calcular(long int ** matrizA, long int ** matrizB, long int ** matrizC, int n){
 
-    int metade = n/2;
+    int metade = n/2;   
 
     // SE A MATRIZ RESULTANTE DAS OPERAÇÕES FOR DE ORDEM IMPAR, ADICIONA UMA 
     // COLUNA E LINHA A MAIS.
@@ -517,7 +514,7 @@ void calcular(long int ** matrizA, long int ** matrizB, long int ** matrizC, int
             calculoMatrizM2(matrizR1, matrizM2, matA3, matA4, matB1, n);
             calculoMatrizM3(matrizR1, matrizM3, matA1, matB2, matB4, n);
             calculoMatrizM4(matrizR1, matrizM4, matA4, matB1, matB3, n);
-            calculoMatrizM5(matrizR1, matrizM5, matA4, matB1, matB3, n);
+            calculoMatrizM5(matrizR1, matrizM5, matA1, matA2, matB4, n);
             calculoMatrizM6(matrizR1, matrizR2, matrizM6, matA1, matA3, matB1, matB2, n);
             calculoMatrizM7(matrizR1, matrizR2, matrizM7, matA2, matA4, matB3, matB4, n);
 
@@ -530,7 +527,7 @@ void calcular(long int ** matrizA, long int ** matrizB, long int ** matrizC, int
             
             juntarMatriz(matrizC, matrizC1, matrizC2, matrizC3, matrizC4, n);
 
-            if (DEBUG_MODE = 1){
+            if (DEBUG_MODE == 1){
                 printf("--- MATRIZ M1 ---\n");
                 imprimeMatriz(matrizM1, metade);
                 printf("--- MATRIZ M2 ---\n");
@@ -585,12 +582,15 @@ void calcular(long int ** matrizA, long int ** matrizB, long int ** matrizC, int
             liberaMemoria(matrizC3, metade);
             liberaMemoria(matrizC4, metade);
 
+            liberaMemoria(matrizR1, metade);
+            liberaMemoria(matrizR2, metade);
+            
 
-            free(matrizR1);
-            free(matrizR2);
+            //free(matrizR1);
+            //free(matrizR2);
 
-            matrizR1 = NULL;
-            matrizR2 = NULL;
+            //atrizR1 = NULL;
+            //matrizR2 = NULL;
 
 
         }
