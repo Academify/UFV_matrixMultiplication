@@ -1,29 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+    
+    // - Grupo composto pelos alunos Renan Lopes - (97370) e Thiago Ferreira - (98893)
 
+    // Considerações para a correção:
+    
+    // - Este arquivo contém o código para o método tradicional de multiplicação de matrizes
+// ------------------------------------------------------------------------------------------------------------------------------------//
 
-// PROTOTIPOS
+// - Aqui estão descritos os protótipos das funções usadas no método em questão
+
+// - A função abaixo é responsável por realizar a leitura dos elementos de uma matriz
 void leMatriz(long int** matriz, int numLinhas);
+
+// - A função abaixo é responsável por imprimir os elementos de uma matriz
 void imprimeMatriz(long int** matriz, int numLinhas);
+
+// - A função abaixo é responsável por realizar o cálculo da multiplicação das matrizes A e B e guarda a resultado na matriz C
 void multiplicarMatrizes(long int** matriz_1, long int** matriz_2, long int** matriz_3, int numLinhas);
+
+// - A função abaixo é responsável por desalocar a memória alocada para uma determinada matriz
 void liberaMemoria(long int** matriz, int linhas);
+
+// - Função que, uma vez especificado um vetor de ponteiros de ponteiros, aloca um vetor de ponteiros de inteiro para cada posição do
+//   primeiro vetor.
 void autoAlocMatriz(long int** alocarMatriz, int numlinhas);
 
-
+// - Função main ---------------------------------------------------------------------------------------------------------------------//
 
 int main(int argc, char *argv[]){
 
-	int DEBUG_MODE = 0;
-	if (argc > 1) DEBUG_MODE = 1;
-
-
-	int n;
-
+	int n; // - Variável que armazena a ordem das matrizes
 
 	scanf("%d", &n); // Lê a ordem das matrizes
 	
 
-	// Alocação das matrizes a seram usadas
+	// - Alocação das matrizes a seram usadas
     long int **matriz1 = (long int**)malloc(n * sizeof(long int*)); 
 	autoAlocMatriz(matriz1, n);
 
@@ -38,13 +51,6 @@ int main(int argc, char *argv[]){
     leMatriz(matriz1, n);
     leMatriz(matriz2, n);
 	
-	// DEBUG MODE
-	if (DEBUG_MODE == 1){
-		printf("Matriz 1\n");
-		imprimeMatriz(matriz1, n);
-		printf("Matriz 2\n");
-		imprimeMatriz(matriz2, n);
-	}
 
 	// Realiza a multiplicação das matrizes
     multiplicarMatrizes(matriz1, matriz2, matriz3, n);
@@ -61,6 +67,7 @@ int main(int argc, char *argv[]){
   return 0;
 }
 
+// - Abaixo estão todas as funções cujo funcionamento foi descrito no início deste arquivo
 
 void leMatriz(long int** matriz, int numLinhas){
 	for (int i = 0; i < numLinhas; i++){
@@ -77,7 +84,6 @@ void imprimeMatriz(long int** matriz, int numLinhas){
     	}
     	printf("\n");
   	}
-  	printf("\n");
 }
 
 void multiplicarMatrizes(long int** matriz_1, long int** matriz_2, long int** matriz_3, int numLinhas){

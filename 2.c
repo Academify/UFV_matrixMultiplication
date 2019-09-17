@@ -1,26 +1,55 @@
 #include <stdio.h>
 #include <stdlib.h>
-//---------------------------------------------------------------------------------------------------------------
-
-    // Considerações:
+//-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
     
-    // - Precisa desalocar as matrizes alocadas no método que divide a matriz principal.
-    // - Talvez você queira fazer algumas alterações no meu código pra vc entender melhor. Fique a vontade!
-    
-//---------------------------------------------------------------------------------------------------------------
+    // - Grupo composto pelos alunos Renan Lopes - (97370) e Thiago Ferreira - (98893)
 
+    // Considerações para a correção:
+    
+    // - Neste arquivo está contido o código para o cálculo de multiplicação de matrizes pelo método de multiplicação rápida.
+
+    // - Para casos mais básicos (até matrizes de ordem n = 6) foi usado o método tradicional de multiplicação de matrizes 
+    // - Para matrizes de oredem maior do que n = 6 o método rápido de multiplicação é aplicado
+    
+// ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+
+
+    // - Aqui estão descritas os protótipos das funções básicas:
+
+    // - Função que desaloca a memória usada para guardar uma matriz
     void liberaMemoria(long int** matriz, int linhas);
+
+    // - Função que lê os elementos de uma determinada matriz
     void leMatriz(long int** matriz, int numLinhas);
+
+    // - Função que imprime os elementos de uma determinada matriz
     void imprimeMatriz(long int** mat, int numLinhas);
+
+    // - Função que, uma vez especificado um vetor de ponteiros de ponteiros, aloca um vetor de ponteiros de inteiro para cada posição do
+    //   primeiro vetor.
     void autoAlocMatriz(long int** alocarMatriz, int numlinhas);
+
+    //- Função que reagrupa as 4 matrizes finais que compõem a matriz resultante da multiplicação (C)
     void juntarMatriz(long int** matrizC, long int** matrizC1, long int** matrizC2, long int** matrizC3, long int** matrizC4, int n);
+
+    // - Função  que divide a matriz A em 4 matrizes de ordem n/2
     void divideMatrizA(long int** matrizA, long int** matA1, long int** matA2, long int** matA3, long int** matA4, int n);
+
+    // - Função que divide a matriz B em 4 matrizes de ordem n/2
     void divideMatrizB(long int** matrizB, long int** matB1, long int** matB2, long int** matB3, long int** matB4, int n);
+
+    // - Função que desaloca a memória das matrizes principais, A, B e C.
     void valgrindZero(long int** matrizA, long int** matrizB, long int** matrizC, int n);
 
+    // - Função que realiza a operação de somar duas matrizes
     void somaMatrizes(long int **matrizX, long int **matrizY, long int **matrizW, int n, char tipo);
+
+    // - Função que realiza a operação de multiplicar matrizes de ordem menor que n = 6
     void multiplicarMatrizes(long int** matrizX, long int** matrizY, long int** matrizW, int n);
 
+    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+    // - A seguir estão os protótipos das funções que calculam as matrizes intermediárias do método rápido de multiplicação de matrizes
+    // - Funções que calculam de M1 até M7
     void calculoMatrizM1(long int **matrizR1, long int **matrizR2, long int **matrizM1, long int **matrizA1, long int **matrizA4, long int **matrizB1, long int **matrizB4, int n);
     void calculoMatrizM2(long int **matrizR1, long int **matrizM2, long int **matrizA3, long int **matrizA4, long int **matrizB1, int n);
     void calculoMatrizM3(long int **matrizR1, long int **matrizM3, long int **matrizA1, long int **matrizB2, long int **matrizB4, int n);
@@ -28,28 +57,29 @@
     void calculoMatrizM5(long int **matrizR1, long int **matrizM5, long int **matrizA1, long int **matrizA2, long int **matrizB4, int n);
     void calculoMatrizM6(long int **matrizR1, long int **matrizR2, long int **matrizM6, long int **matrizA1, long int **matrizA3, long int **matrizB1, long int **matrizB2, int n);
     void calculoMatrizM7(long int **matrizR1, long int **matrizR2, long int **matrizM7, long int **matrizA2, long int **matrizA4, long int **matrizB3, long int **matrizB4, int n);
-    void calcularMatrizM(long int **matrizR1, long int **matrizR2, long int **matrizM1, long int **matrizM2, long int **matrizM3, long int **matrizM4, long int **matrizM5, long int **matrizM6, long int **matrizM7, long int** matA1, long int** matA2, long int** matA3, long int** matA4, long int** matB1, long int** matB2, long int** matB3, long int** matB4, int n);
     
+    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+    // - Funções que calculam C1, C2, C3 e C4.
     void calculaMatrizC1(long int **matrizR1, long int **matrizR2, long int **matrizC1, long int **matrizM1, long int **matrizM4, long int **matrizM5, long int **matrizM7, int n);
     void calculaMatrizC2(long int **matrizC2, long int **matrizM3, long int **matrizM5, int n);
     void calculaMatrizC3(long int **matrizC3, long int **matrizM2, long int **matrizM4, int n);
     void calculaMatrizC4(long int **matrizR1, long int **matrizR2, long int **matrizC4, long int **matrizM1, long int **matrizM2, long int **matrizM3, long int **matrizM6, int n);
+    // - Função que realiza a chamada de todas as funções anteriores das 4 matrizes.
     void calcularMatrizC(long int **matrizR1, long int **matrizR2, long int **matrizM1, long int **matrizM2, long int **matrizM3, long int **matrizM4, long int **matrizM5, long int **matrizM6, long int **matrizM7, long int **matrizC1,  long int **matrizC2,  long int **matrizC3,  long int **matrizC4, int n);
-
+    // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+    // - Funcão principal. Ela quem dita a ordem de todas as chamadas das funções e integra o resultado
     void calcular(long int ** matrizA, long int ** matrizB, long int ** matrizC, int n);
 
 
-int DEBUG_MODE = 0;
-
 int main(){
     
-    // Lê a ordem das matrizes
+    // - Lê a ordem das matrizes
     int n=0;
 	scanf("%d", &n); 
     int metade = n/2;
 
     
-    // Aloca matrizes bases a serem lidas
+    // - Aloca matrizes bases a serem lidas (A e B)
     long int **matrizA = (long int**) malloc(n * sizeof(long int*));
     autoAlocMatriz(matrizA, n);
     long int **matrizB = (long int**) malloc(n * sizeof(long int*));
@@ -57,43 +87,24 @@ int main(){
     long int **matrizC = (long int**) malloc(n * sizeof(long int*));
     autoAlocMatriz(matrizC, n);
 
-
-
-    // Le matrizes A e B   
+    // - Le matrizes A e B   
     leMatriz(matrizA, n);
     leMatriz(matrizB, n);
 
-    if (DEBUG_MODE == 1){
-        printf("--------MATRIZ A--------\n");
-        imprimeMatriz(matrizA,n);
-        printf("--------MATRIZ B--------\n");
-        imprimeMatriz(matrizB, n);
-    }
-    
+    // - Chama a função que orquestra toda a operação    
     calcular(matrizA, matrizB, matrizC, n);
-    printf("---- MATRIZ A -----\n");
-    imprimeMatriz(matrizA, n);
-    printf("---- MATRIZ B -----\n");
-    imprimeMatriz(matrizB, n);
-    printf("---- MATRIZ C -----\n");
+
+    // - Imprime a matriz resultante das operações (Matriz C)
     imprimeMatriz(matrizC, n);
 
-    // CALCULAR M
-    //calcularMatrizM(matrizM1, matrizM2, matrizM3, matrizM4, matrizM5, matrizM6, matrizM7, matA1, matA2, matA3, matA4, matB1, matB2, matB3, matB4, n);
-
-    // CALCULAR C
-    //calcularMatrizC(matrizM1, matrizM2, matrizM3, matrizM4, matrizM5, matrizM6, matrizM7, matrizC1, matrizC2, matrizC3, matrizC4, n);
-
-    //juntarMatriz(matrizC, matrizC1, matrizC2, matrizC3, matrizC4, n);
-
+    // - Desaloca o espaço das matrizes na memória
     valgrindZero(matrizA, matrizB, matrizC, n);
         
-    
-    
     return 0;
 }
 
-
+// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+// - Abaixo estão todas as funções cujo funcionamento foi descrito no início deste arquivo
 
 void autoAlocMatriz(long int** alocarMatriz, int numlinhas){
     for (int i = 0; i < numlinhas; i++){
@@ -145,19 +156,6 @@ void divideMatrizA(long int** matrizA, long int** matA1, long int** matA2, long 
             matA4[i-metade][j-metade] = matrizA[i][j];
         }
     }
-
-
-    if (DEBUG_MODE == 1){
-        printf("--------DIVISOES DE A--------\n");
-        printf("---A1---\n");
-        imprimeMatriz(matA1, metade);
-        printf("---A2---\n");
-        imprimeMatriz(matA2, metade);
-        printf("---A3---\n");
-        imprimeMatriz(matA3, metade);
-        printf("---A4---\n");
-        imprimeMatriz(matA4, metade);
-    }
 }
 
 void divideMatrizB(long int** matrizB, long int** matB1, long int** matB2, long int** matB3, long int** matB4, int n){
@@ -186,19 +184,6 @@ void divideMatrizB(long int** matrizB, long int** matB1, long int** matB2, long 
             matB4[i-metade][j-metade] = matrizB[i][j];
         }
     }
-
-
-    if (DEBUG_MODE == 1){
-        printf("--------DIVISOES DE B--------\n");
-        printf("---B1---\n");
-        imprimeMatriz(matB1, metade);
-        printf("---B2---\n");
-        imprimeMatriz(matB2, metade);
-        printf("---B3---\n");
-        imprimeMatriz(matB3, metade);
-        printf("---B4---\n");
-        imprimeMatriz(matB4, metade);
-    }
 }
 
 void imprimeMatriz(long int** mat, int numLinhas){
@@ -208,7 +193,6 @@ void imprimeMatriz(long int** mat, int numLinhas){
         }
         printf("\n");
     }
-    printf("\n");
 }
 
 void leMatriz(long int** matriz, int numLinhas){
@@ -263,7 +247,6 @@ void multiplicarMatrizes(long int** matrizX, long int** matrizY, long int** matr
 			for (int k = 0; k < n; k++){
 				multiplicador = multiplicador + matrizX[i][k] * matrizY[k][j];
 			}
-
 			matrizW[i][j] = multiplicador;
 			multiplicador = 0;
 		}
@@ -271,98 +254,49 @@ void multiplicarMatrizes(long int** matrizX, long int** matrizY, long int** matr
 }
 
 void calculoMatrizM1(long int **matrizR1, long int **matrizR2, long int **matrizM1, long int **matrizA1, long int **matrizA4, long int **matrizB1, long int **matrizB4, int n){
-	// matrizM1 = (A1 + A4 )*(B1 + B4)
-
-	// matrizR1 e o resultante da primeira adicao 
-	// matrizR2 e o resultante da segunda adicao 
-	// matrizM1 e o resultante da multiplicação 
-
     somaMatrizes(matrizA1, matrizA4, matrizR1, n/2, '0');
     somaMatrizes(matrizB1, matrizB4, matrizR2, n/2, '0');
     calcular(matrizR1, matrizR2, matrizM1, n/2);
 }
 
 void calculoMatrizM2(long int **matrizR1, long int **matrizM2, long int **matrizA3, long int **matrizA4, long int **matrizB1, int n){
-	// matrizM2 = (A21 + A22)*B11
-
-	// matrizR1 e o resultante da adicao 
-	// matrizM2 e o resultante da multiplicação 
 
 	somaMatrizes(matrizA3, matrizA4, matrizR1, n/2, '0');
-	multiplicarMatrizes(matrizR1, matrizB1, matrizM2, n/2);
+    calcular(matrizR1, matrizB1, matrizM2, n/2);
 }
 
 void calculoMatrizM3(long int **matrizR1, long int **matrizM3, long int **matrizA1, long int **matrizB2, long int **matrizB4, int n){
-	// matrizM3 = A11*(B12 − B22)
-
-	// matrizR1 e o resultante da subtracao
-	// matrizM3 e o resultante da multiplicação 
-
+	
 	somaMatrizes(matrizB2, matrizB4, matrizR1, n/2, '1');
-	multiplicarMatrizes(matrizA1, matrizR1, matrizM3, n/2);
+    calcular(matrizA1, matrizR1, matrizM3, n/2);
 
 }
 
 void calculoMatrizM4(long int **matrizR1, long int **matrizM4, long int **matrizA4, long int **matrizB1, long int **matrizB3, int n){
-	// matrizM4 = A22*(B21 − B11)
-
-	// matrizR1 e o resultante da subtracao
-	// matrizM3 e o resultante da multiplicação 
-
+	
 	somaMatrizes(matrizB3, matrizB1, matrizR1, n/2, '1');
-	multiplicarMatrizes(matrizA4, matrizR1, matrizM4, n/2);
-
+    calcular(matrizA4, matrizR1, matrizM4, n/2);
 }
 
 void calculoMatrizM5(long int **matrizR1, long int **matrizM5, long int **matrizA1, long int **matrizA2, long int **matrizB4, int n){
-	// matrizM5 = (A11 + A12)*B22
-
-	// matrizR1 e o resultante da adicao
-	// matrizM5 e o resultante da multiplicação 
 
 	somaMatrizes(matrizA1, matrizA2, matrizR1, n/2, '0');
-	multiplicarMatrizes(matrizR1, matrizB4, matrizM5, n/2);
+    calcular(matrizR1, matrizB4, matrizM5, n/2);
 
 }
 
 void calculoMatrizM6(long int **matrizR1, long int **matrizR2, long int **matrizM6, long int **matrizA1, long int **matrizA3, long int **matrizB1, long int **matrizB2, int n){
-	// matrizM6 = (A21 − A11)*(B11 + B12)
-
-	// matrizR1 e o resultante da subtracao
-	// matrizR2 e o resultante da adicao
-	// matrizM6 e o resultante da multiplicação 
-
+	
 	somaMatrizes(matrizA3, matrizA1, matrizR1, n/2, '1');    
 	somaMatrizes(matrizB1, matrizB2, matrizR2, n/2, '0');
-	multiplicarMatrizes(matrizR1, matrizR2, matrizM6, n/2);
-
+    calcular(matrizR1, matrizR2, matrizM6, n/2);
 }
 
 void calculoMatrizM7(long int **matrizR1, long int **matrizR2, long int **matrizM7, long int **matrizA2, long int **matrizA4, long int **matrizB3, long int **matrizB4, int n){
-	// matrizM7 = (A12 − A22)*(B21 + B22)
-
-	// matrizR1 e o resultante da subtracao
-	// matrizR2 e o resultante da adicao
-	// matrizM7 e o resultante da multiplicação 
-
-
+	
 	somaMatrizes(matrizA2, matrizA4, matrizR1, n/2, '1');
 	somaMatrizes(matrizB3, matrizB4, matrizR2, n/2, '0');
-	multiplicarMatrizes(matrizR1, matrizR2, matrizM7, n/2);
-
-}
-
-void calcularMatrizM(long int **matrizR1, long int **matrizR2, long int **matrizM1, long int **matrizM2, long int **matrizM3, long int **matrizM4, long int **matrizM5, long int **matrizM6, long int **matrizM7, long int** matA1, long int** matA2, long int** matA3, long int** matA4, long int** matB1, long int** matB2, long int** matB3, long int** matB4, int n){
-    
-    int metade = n/2;
-
-    calculoMatrizM1(matrizR1, matrizR2, matrizM1, matA1, matA4, matB1, matB4, metade);
-    calculoMatrizM2(matrizR1, matrizM2, matA3, matA4, matB1, metade);
-    calculoMatrizM3(matrizR1, matrizM3, matA1, matB2, matB4, metade);
-    calculoMatrizM4(matrizR1, matrizM4, matA4, matB1, matB3, metade);
-    calculoMatrizM5(matrizR1, matrizM5, matA1, matA2, matB4, metade);
-    calculoMatrizM6(matrizR1, matrizR2, matrizM6, matA1, matA3, matB1, matB2, metade);
-    calculoMatrizM7(matrizR1, matrizR2, matrizM7, matA2, matA4, matB3, matB4, metade);
+    calcular(matrizR1, matrizR2, matrizM7, n/2);
 
 }
 
@@ -450,6 +384,7 @@ void calcular(long int ** matrizA, long int ** matrizB, long int ** matrizC, int
             return;
         }
         else{
+
             // ------- ALOCAR MATRIZES --------
 
             // MATRIZES DE A
@@ -524,34 +459,6 @@ void calcular(long int ** matrizA, long int ** matrizB, long int ** matrizC, int
             
             juntarMatriz(matrizC, matrizC1, matrizC2, matrizC3, matrizC4, n);
 
-            if (DEBUG_MODE == 1){
-                printf("--- MATRIZ M1 ---\n");
-                imprimeMatriz(matrizM1, metade);
-                printf("--- MATRIZ M2 ---\n");
-                imprimeMatriz(matrizM2, metade);
-                printf("--- MATRIZ M3 ---\n");
-                imprimeMatriz(matrizM3, metade);
-                printf("--- MATRIZ M4 ---\n");
-                imprimeMatriz(matrizM4, metade);
-                printf("--- MATRIZ M5 ---\n");
-                imprimeMatriz(matrizM5, metade);
-                printf("--- MATRIZ M6 ---\n");
-                imprimeMatriz(matrizM6, metade);
-                printf("--- MATRIZ M7 ---\n");
-                imprimeMatriz(matrizM7, metade);
-
-
-                printf("--- MATRIZ C1 ---\n");
-                imprimeMatriz(matrizC1, metade);
-                printf("--- MATRIZ C2 ---\n");
-                imprimeMatriz(matrizC2, metade);
-                printf("--- MATRIZ C3 ---\n");
-                imprimeMatriz(matrizC3, metade);
-                printf("--- MATRIZ C4 ---\n");
-                imprimeMatriz(matrizC4, metade);
-            }
-
-
 
             // ------- DESALOCAR MATRIZES --------
 
@@ -581,15 +488,6 @@ void calcular(long int ** matrizA, long int ** matrizB, long int ** matrizC, int
 
             liberaMemoria(matrizR1, metade);
             liberaMemoria(matrizR2, metade);
-            
-
-            //free(matrizR1);
-            //free(matrizR2);
-
-            //atrizR1 = NULL;
-            //matrizR2 = NULL;
-
-
         }
     }
 }
